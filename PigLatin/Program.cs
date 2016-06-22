@@ -10,6 +10,20 @@ namespace PigLatin
     {
         static void Main(string[] args)
         {
+
+           
+            string line = string.Empty;
+            
+            while (!line.Equals("exit".ToLower()))
+            {
+                if (line.Equals("exit".ToLower()))
+                    break;
+                Console.Write("Enter Line: ");
+                line = Console.ReadLine();
+
+            }
+            
         }
+
     }
 }
