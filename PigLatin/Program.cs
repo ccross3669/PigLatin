@@ -9,8 +9,16 @@ namespace PigLatin
 {
     class Program
     {
+        // Defined Vowels and Consanants - English
+        private static readonly char[] vowels = "aeiouyAEIOUY".ToCharArray();
+        // Defined Consonants and Consanants - English
+        private static readonly char[] consanants = "bcdfghjklmnpqrstvxzwyBCDFGHJKLMNPQRSTVXZWY".ToCharArray();
+
+
         static void Main(string[] args)
         {
+            
+            
 
             string line = string.Empty;
 
@@ -35,6 +43,7 @@ namespace PigLatin
                     if (!isWordValid(word))
                     {
                         translatedLine = translatedLine + word;
+                        wordCount++;
                         continue;
                     }
 
@@ -43,29 +52,58 @@ namespace PigLatin
                     string outWord;
                     StripPunctuation(word, out outPunct, out outWord);
 
-                    isWordCapital(word);
-
+                    
                     string prefix, stem;
+                    bool doesWordContainNoConsonants = DoesWordContainNoConsonants(outWord);
+                    if (doesWordContainNoConsonants)
+                    {
+                        prefix = string.Empty;
+                        stem = outWord;
+                    }
+                    else
+                    {
+                        SplitWord(outWord, out prefix, out stem, isWordCapital(outWord));
+                    }
 
-                    SplitWord(word, out prefix, out stem);
-
+                    translatedLine = translatedLine + TranslateWord(prefix,stem, outPunct, doesWordContainNoConsonants);
 
                     wordCount++;
                 }
-
+                Console.WriteLine(translatedLine);
             }
 
         }
 
-
-
-
-        private static void SplitWord(string word, out string prefix, out string stem)
+        private static string TranslateWord(string prefix, string stem, string punct, bool doesWordContainNoConsonants)
         {
-            
+
+            if (doesWordContainNoConsonants)
+                return stem + "yay" + punct;
+            else
+                return stem + prefix + "ay" + punct;
 
 
+        }
 
+        private static void SplitWord(string word, out string prefix, out string stem, bool isFirstLetterCapital)
+        {
+
+            int index = GetIndexOfFirstVowel(word);
+
+            string outPrefix = word.Substring(0, index);
+            string outStem = word.Substring(index);
+            prefix = outPrefix;
+
+            if (isFirstLetterCapital)
+            {
+                stem = outStem.First().ToString().ToUpper() + outStem.Substring(1);
+                prefix = outPrefix.First().ToString().ToLower() + outPrefix.Substring(1);
+            }
+            else
+            {
+                stem = outStem;
+                prefix = outPrefix;
+            }
         }
 
         private static bool isWordCapital(string word)
@@ -80,16 +118,17 @@ namespace PigLatin
 
         private static bool isWordValid(string word)
         {
+            word = word.TrimEnd('!', '?', ',');
+
             int count = Regex.Matches(word, @"[a-zA-Z]").Count;
 
-            if (count == 0)
+            if ((count == 0) || (count!= word.Length))
             {
                 return false;
             }
-            else
-            {
+            
                 return true;
-            }
+            
         }
         private static bool StripPunctuation(string word, out string outPunct, out string outWord)
         {
@@ -122,21 +161,41 @@ namespace PigLatin
 
 
         }
-        private static bool IsCharVowel(char ch)
+        private static bool DoesWordContainNoConsonants(string word)
         {
-            if (char.ToLower(ch) == 'a' || 
-                char.ToLower(ch) == 'e' ||
-                char.ToLower(ch) == 'i' ||
-                char.ToLower(ch) == 'o' ||
-                char.ToLower(ch) == 'u' ||
-                char.ToLower(ch) == 'u')
+
+            foreach (char consonant in consanants)
             {
-                return true;
+                if (word.Contains(consonant))
+                    return false;
             }
-            else
+
+            return true;
+        }
+
+        private static int GetIndexOfFirstVowel(string word)
+        {
+
+            foreach (char character in word)
             {
-                return false;
+                if (vowels.Contains(character))
+                {
+                    return word.IndexOf(character);
+                }
             }
+
+            return -1;
+        }
+        private static bool DoesWordContainVowel(string word)
+        {
+
+            foreach (char vowel in vowels)
+            {
+                if (word.Contains(vowel))
+                    return true;
+            }
+
+            return false;            
         }
 
     }
