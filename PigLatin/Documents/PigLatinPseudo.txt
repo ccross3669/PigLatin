@@ -1,8 +1,4 @@
-Assuming that there is no space on punctuation ... i.e
-Assuming there are no apostraphies, hyphens, etc in the middle of the words.
-Assumptions - defining a "word by the separation of white space"
-Assumptions - proper grammer
-The specifications do not explicitly state that this is user input... it will be assumed. (it could be external input)
+
 
 
 String Line;
@@ -17,15 +13,15 @@ While(Line != "exit")
 	String translatedLine;
 	foreach(word in words)
 	{
-		if(!isFirstElement())
-		{
-			translatedLine = translatedLine + " ";
-		}
+		
 		if(!hasLetters())
 		{
 			translatedLine = translatedLine + word;
 		}
-		
+		if(Word is not valid)
+		{
+			continue with for loop
+		}
 		char punctuation = stripPuctuation(word);
 		
 		string[] parts = splitWord(word);
@@ -33,10 +29,24 @@ While(Line != "exit")
 		string prefix = parts[0];
 		string stem = parts[1];
 		
+		bool doesWordContainNoConsonants = DoesWordContainNoConsonants(word);
+		
+		if(doesWordContainNoConsonants)
+		{
+			prefix = null;
+			stem = word;
+		}
+		else
+		{
+			if(the first letter is capital)
+			{
+			    Swith the cases();
+			}
+			
+			Split the word by first vowel();
+		}
+		translatedline = translatedline + word;
 		
 	}
-	
-	
-	
 	
 }

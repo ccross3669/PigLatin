@@ -1,0 +1,16 @@
+﻿
+Assumptions
+
+This program should work as desired with a few assumptions that were not explicitly detailed in the requirements documentation. 
+I'll itemize the assumptions below. Some assumptions overlap one another. 
+An example of this would be, one of the assumptions is that it is assumed that the user is using proper English and grammar. 
+Another assumption states that there are no spaces between punctuation. 
+
+
+1) The user is translating from English to Pig Latin. (This is stated in the requirements, but important to emphasize)
+2) The user is using proper English grammar.
+3) A "word" is defined by what is between a white space on a line of text.
+4) The word must contain at least one vowel or it will not be translated.
+5) The punctuation does not appear in the middle of the word.  i.e - I'm or check-in would not translate.
+6) The input is user input and not from a file feed. 
+

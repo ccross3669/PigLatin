@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PigLatin
 {
@@ -17,14 +14,10 @@ namespace PigLatin
 
         static void Main(string[] args)
         {
-            
-            
-
             string line = string.Empty;
 
             while (!line.ToLower().Equals("exit".ToLower()))
             {
-
                 Console.Write("Enter Line: ");
                 line = Console.ReadLine();
 
@@ -40,7 +33,7 @@ namespace PigLatin
                     {
                         translatedLine = translatedLine + " ";
                     }
-                    if (!isWordValid(word))
+                    if (!IsWordValid(word))
                     {
                         translatedLine = translatedLine + word;
                         wordCount++;
@@ -52,7 +45,7 @@ namespace PigLatin
                     string outWord;
                     StripPunctuation(word, out outPunct, out outWord);
 
-                    
+
                     string prefix, stem;
                     bool doesWordContainNoConsonants = DoesWordContainNoConsonants(outWord);
                     if (doesWordContainNoConsonants)
@@ -62,29 +55,24 @@ namespace PigLatin
                     }
                     else
                     {
-                        SplitWord(outWord, out prefix, out stem, isWordCapital(outWord));
+                        SplitWord(outWord, out prefix, out stem, IsWordCapital(outWord));
                     }
 
-                    translatedLine = translatedLine + TranslateWord(prefix,stem, outPunct, doesWordContainNoConsonants);
+                    translatedLine = translatedLine + TranslateWord(prefix, stem, outPunct, doesWordContainNoConsonants);
 
                     wordCount++;
                 }
                 Console.WriteLine(translatedLine);
             }
-
         }
 
         private static string TranslateWord(string prefix, string stem, string punct, bool doesWordContainNoConsonants)
         {
-
             if (doesWordContainNoConsonants)
                 return stem + "yay" + punct;
             else
                 return stem + prefix + "ay" + punct;
-
-
         }
-
         private static void SplitWord(string word, out string prefix, out string stem, bool isFirstLetterCapital)
         {
 
@@ -105,8 +93,7 @@ namespace PigLatin
                 prefix = outPrefix;
             }
         }
-
-        private static bool isWordCapital(string word)
+        private static bool IsWordCapital(string word)
         {
             if (Char.IsUpper(word[0]))
             {
@@ -115,24 +102,21 @@ namespace PigLatin
             else
                 return false;
         }
-
-        private static bool isWordValid(string word)
+        private static bool IsWordValid(string word)
         {
             word = word.TrimEnd('!', '?', ',');
 
             int count = Regex.Matches(word, @"[a-zA-Z]").Count;
 
-            if ((count == 0) || (count!= word.Length))
+            if ((count == 0) || (count != word.Length))
             {
                 return false;
             }
-            
-                return true;
-            
+
+            return true;
         }
         private static bool StripPunctuation(string word, out string outPunct, out string outWord)
         {
-
             // Assuming that they have used correct punctuation
             if (word[word.Length - 1].Equals(','))
             {
@@ -158,8 +142,6 @@ namespace PigLatin
                 outWord = word;
                 return false;
             }
-
-
         }
         private static bool DoesWordContainNoConsonants(string word)
         {
@@ -172,7 +154,6 @@ namespace PigLatin
 
             return true;
         }
-
         private static int GetIndexOfFirstVowel(string word)
         {
 
@@ -195,7 +176,7 @@ namespace PigLatin
                     return true;
             }
 
-            return false;            
+            return false;
         }
 
     }
