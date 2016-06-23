@@ -42,13 +42,40 @@ namespace PigLatin
                     string outPunct;
                     string outWord;
                     StripPunctuation(word, out outPunct, out outWord);
-                    
+
+                    isWordCapital(word);
+
+                    string prefix, stem;
+
+                    SplitWord(word, out prefix, out stem);
+
 
                     wordCount++;
                 }
 
             }
 
+        }
+
+
+
+
+        private static void SplitWord(string word, out string prefix, out string stem)
+        {
+            
+
+
+
+        }
+
+        private static bool isWordCapital(string word)
+        {
+            if (Char.IsUpper(word[0]))
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
         private static bool isWordValid(string word)
@@ -95,6 +122,23 @@ namespace PigLatin
 
 
         }
+        private static bool IsCharVowel(char ch)
+        {
+            if (char.ToLower(ch) == 'a' || 
+                char.ToLower(ch) == 'e' ||
+                char.ToLower(ch) == 'i' ||
+                char.ToLower(ch) == 'o' ||
+                char.ToLower(ch) == 'u' ||
+                char.ToLower(ch) == 'u')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
 
